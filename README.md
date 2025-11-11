@@ -129,7 +129,7 @@ A9X11 supports stateful sessions using sessionId. This allows users to:
 POST https://api.a9x11.com/v1/completions
 Content-Type: application/json
 Authorization: Bearer YOUR_API_KEY
-
+```
 {
   "model": "a9x11-mini",
   "messages": [
@@ -139,14 +139,14 @@ Authorization: Bearer YOUR_API_KEY
   "sessionId": "session_abc123",
   "includeCodeExecution": false
 }
-
+```
 Response should include generated source files (strings or file references). Store session_abc123 — it ties together subsequent uploads/edits/downloads.
 2️⃣ Start session and request a safe, high-level Windows driver scaffold (non-actionable)
 
 POST https://api.a9x11.com/v1/completions
 Content-Type: application/json
 Authorization: Bearer YOUR_API_KEY
-
+```
 {
   "model": "a9x11-3.0",
   "messages": [
@@ -156,6 +156,7 @@ Authorization: Bearer YOUR_API_KEY
   "sessionId": "session_abc123",
   "includeCodeExecution": false
 }
+```
 This asks for design & checklist only (safe). If you later need actual driver code, require explicit security review and legal validation.
 
 ✅Keep multi-step conversations or code execution context.
@@ -163,6 +164,8 @@ This asks for design & checklist only (safe). If you later need actual driver co
 ✅Reattach to an existing session after disconnect or when performing file/code operations.
 
 3️⃣ Upload multiple files into the session (original DLL, patch instructions, source files)
+
+```
 POST https://api.a9x11.com/v1/files
 Authorization: Bearer YOUR_API_KEY
 (multipart/form-data)
@@ -171,14 +174,14 @@ Form fields:
   - file: helper_patch_script.txt
   - file: design_notes.md
   - sessionId: session_abc123
-
+```
 
 Pass the session ID to attach files, run code, or resume SSE streaming.
 4️⃣ Ask AI to patch a file (request safe, high-level modifications or apply provided patch script) — run code execution in sandbox
 POST https://api.a9x11.com/v1/completions
 Content-Type: application/json
 Authorization: Bearer YOUR_API_KEY
-
+```
 {
   "model": "a9x11-mini",
   "messages": [
@@ -189,8 +192,9 @@ Authorization: Bearer YOUR_API_KEY
   "files": ["original.dll","helper_patch_script.txt"],
   "includeCodeExecution": true
 }
+```
 The API will run the orchestrated code execution in your configured sandbox/orchestrator. Response (or SSE) should include a mention/reference to updated.dll if created. Do not run this against untrusted binaries without sandboxing.
-
+```
 5️⃣ Reattach later to continue work (reuse same sessionId)
 POST https://api.a9x11.com/v1/completions
 Content-Type: application/json
@@ -205,6 +209,7 @@ Authorization: Bearer YOUR_API_KEY
   "sessionId": "session_abc123",
   "includeCodeExecution": true
 }
+```
 Because session_abc123 is reused, the orchestrator can access previously attached files and state.
 
 ⚠️ Note: Sessions expire after 1 day (24 hours). After that, a new sessionId is required.
