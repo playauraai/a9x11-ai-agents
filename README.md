@@ -162,6 +162,7 @@ Authorization: Bearer YOUR_API_KEY
 This asks for design & checklist only (safe). If you later need actual driver code, require explicit security review and legal validation.
 
 ✅Keep multi-step conversations or code execution context.
+
 ✅Reattach to an existing session after disconnect or when performing file/code operations.
 
 3️⃣ Upload multiple files into the session (original DLL, patch instructions, source files)
