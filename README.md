@@ -233,6 +233,6 @@ API Status: https://status.a9x11.com
 ---
 
 **Enjoying A9X11?**  
-Support us with a coffee: [Buy Me a Coffee](https://www.buymeacoffee.com/playauraaiw)  
+☕Support us with a coffee: [Buy Me a Coffee](https://www.buymeacoffee.com/playauraaiw)  
 
 **Built with ❤️ by A9X11 Team**
